@@ -23,7 +23,7 @@
                             <a href="{{route("groups.view",[$group->id,md5($group->name)])}}" class="font-semibold text-lg truncate"> {{$group->name}} </a>
                             <div class="flex items-center flex-wrap space-x-1 text-sm text-gray-500 capitalize">
                                 <a href="#"> <span> {{\App\Models\GroupMember::where(["group_id"=>$group->id,"approved"=>1])->count()}} members </span> </a>
-                                <a href="#"> <span> {{$group->posts->count()}} posts </span> </a>
+                                <a href="#"> <span> @if($group->posts) {{$group->posts->count()}} @else 0 @endif posts </span> </a>
                             </div> 
     
                             <div class="flex mt-3 space-x-2 text-sm">
