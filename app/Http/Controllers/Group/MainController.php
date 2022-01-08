@@ -146,6 +146,17 @@ class MainController extends Controller
             }
             else{
                 $memberships = GroupMember::where(["user_id"=>Auth::user()->id,"approved"=>1])->count();
+                if($memberships==0){
+                    if(Auth::user()->current_city){
+                        if(Auth::user()->current_city!=$group->location){
+                            $request->session()->flash('error', "First join you current city group before joining other");
+                        }
+                    }
+                    else{
+                        $request->session()->flash('error', "Please add you current city before joining groups");
+                        return redirect()->back();
+                    }
+                }
                 if($memberships>=5){
                     $request->session()->flash('error', "You cannot join more than 5 groups");
                     return redirect()->back();
