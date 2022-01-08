@@ -28,7 +28,7 @@ class MainController extends Controller
             return view("groups.view")->with([
                 "group"=>$group,
                 "posts"=>$posts,
-                "campaigns"=>$campaigns,
+                // "campaigns"=>$campaigns,
             ]);
         }
         else{
@@ -145,19 +145,26 @@ class MainController extends Controller
                 return redirect()->back();
             }
             else{
-                $groupm = new GroupMember;
-                $groupm->group_id = $group->id;
-                $groupm->user_id = Auth::user()->id;
-                if($group->join_approval===1){
-                    $groupm->approved = 0;
-                    $request->session()->flash('success', "Group joining request sent");
+                $memberships = GroupMember::where(["user_id"=>Auth::user()->id,"approved"=>1])->count();
+                if($memberships>=5){
+                    $request->session()->flash('error', "You cannot join more than 5 groups");
+                    return redirect()->back();
                 }
                 else{
-                    $groupm->approved = 1;
-                    $request->session()->flash('success', "Group joined");
+                    $groupm = new GroupMember;
+                    $groupm->group_id = $group->id;
+                    $groupm->user_id = Auth::user()->id;
+                    if($group->join_approval===1){
+                        $groupm->approved = 0;
+                        $request->session()->flash('success', "Group joining request sent");
+                    }
+                    else{
+                        $groupm->approved = 1;
+                        $request->session()->flash('success', "Group joined");
+                    }
+                    $groupm->save();
+                    return redirect()->back();
                 }
-                $groupm->save();
-                return redirect()->back();
             }
         }
         else{

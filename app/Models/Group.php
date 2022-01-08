@@ -17,9 +17,9 @@ class Group extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function group(): BelongsTo
+    public function owner(): BelongsTo
     {
-        return $this->belongsTo(Group::class, 'group_id');
+        return $this->belongsTo(User::class, 'owner_id');
     }
     /**
      * Get the category that owns the Group
