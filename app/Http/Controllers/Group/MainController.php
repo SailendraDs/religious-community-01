@@ -25,9 +25,11 @@ class MainController extends Controller
         }
         if($name == md5($group->name)){
             $posts = GroupPost::where(["group_id"=>$group->id,"approved"=>1])->latest()->paginate(10);
+            $members = GroupMember::where(["group_id"=>$group->id,"approved"=>1])->latest()->paginate(10);
             return view("groups.view")->with([
                 "group"=>$group,
                 "posts"=>$posts,
+                "members"=>$members,
                 // "campaigns"=>$campaigns,
             ]);
         }
