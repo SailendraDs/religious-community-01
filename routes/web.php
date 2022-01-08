@@ -64,7 +64,6 @@ Route::name("groups.")->prefix("groups")->group(function(){
         Route::post("settings/{id}/post-approval/approve",[GroupSettings::class,"postApprovalApprove"])->name("settings.post-approval.approve");
         Route::post("settings/{id}/post-approval/reject",[GroupSettings::class,"postApprovalReject"])->name("settings.post-approval.reject");
         Route::get("join/{id}",[GroupMain::class,"join"])->name("join");
-        Route::post("approve/{id}",[GroupMain::class,"approve"])->name("approve");
         Route::post("create-post/{id}",[GroupPost::class,"create"])->name("post.create");
         Route::post("{id}/post/make-announcement",[GroupPost::class,"announcement"])->name("post.announcement");
         Route::post("{id}/post/like",[GroupPost::class,"like"])->name("post.like");

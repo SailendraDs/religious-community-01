@@ -171,23 +171,4 @@ class MainController extends Controller
             abort(404);
         }
     }
-    public function approve($id,Request $request){
-        $this->validate($request,[
-            "user_id" => "required"
-        ]);
-        $group = Group::find($id);
-        if($group===NULL){
-            abort(404,"The content you are trying to access does not exist");
-        }
-        if($group->owner_id == Auth::user()->id){
-            $groupm = GroupMember::where(["group_id"=>$id,"user_id"=>$request->user_id])->first();
-            $groupm->approved = 1;
-            $groupm->save();
-            $request->session()->flash('success', "User approved");
-            return redirect()->back();
-        }
-        else{
-            abort(404);
-        }
-    }
 }
