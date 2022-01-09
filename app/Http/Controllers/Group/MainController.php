@@ -25,10 +25,12 @@ class MainController extends Controller
         }
         if($name == md5($group->name)){
             $posts = GroupPost::where(["group_id"=>$group->id,"approved"=>1])->latest()->paginate(10);
+            $members = GroupMember::where(["group_id"=>$group->id,"approved"=>1])->latest()->paginate(10);
             return view("groups.view")->with([
                 "group"=>$group,
                 "posts"=>$posts,
-                "campaigns"=>$campaigns,
+                "members"=>$members,
+                // "campaigns"=>$campaigns,
             ]);
         }
         else{
@@ -145,20 +147,37 @@ class MainController extends Controller
                 return redirect()->back();
             }
             else{
-                $groupm = new GroupMember;
-                $groupm->group_id = $group->id;
-                $groupm->user_id = Auth::user()->id;
-                
-                if($group->join_approval===1){
-                    $groupm->approved = 0;
-                    $request->session()->flash('success', "Group joining request sent");
+                $memberships = GroupMember::where(["user_id"=>Auth::user()->id,"approved"=>1])->count();
+                if($memberships==0){
+                    if(Auth::user()->current_city){
+                        if(Auth::user()->current_city!=$group->){location
+                            $request->session()->flash('error', "First join you current city group before joining other");
+                        }
+                    }
+                    else{
+                        $request->session()->flash('error', "Please add you current city before joining groups");
+                        return redirect()->back();
+                    }
+                }
+                if($memberships>=5){
+                    $request->session()->flash('error', "You cannot join more than 5 groups");
+                    return redirect()->back();
                 }
                 else{
-                    $groupm->approved = 1;
-                    $request->session()->flash('success', "Group joined");
+                    $groupm = new GroupMember;
+                    $groupm->group_id = $group->id;
+                    $groupm->user_id = Auth::user()->id;
+                    if($group->join_approval===1){
+                        $groupm->approved = 0;
+                        $request->session()->flash('success', "Group joining request sent");
+                    }
+                    else{
+                        $groupm->approved = 1;
+                        $request->session()->flash('success', "Group joined");
+                    }
+                    $groupm->save();
+                    return redirect()->back();
                 }
-                $groupm->save();
-                return redirect()->back();
             }
         }
         else{

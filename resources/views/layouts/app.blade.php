@@ -101,5 +101,8 @@
                 @endforeach
             @endif
         </script>
+        <script>
+            window.alert = function() {};
+        </script>
 </body>
 </html>

@@ -6,13 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
+use App\Models\GroupPost;
 
 class ProfileController extends Controller
 {
     public function index(){
         $user = Auth::user();
+        $posts = GroupPost::where(["user_id"=>$user->id,"approved"=>1])->latest()->paginate(10);
         return view("user.profile")->with([
-            "user"=>$user
+            "user"=>$user,
+            "posts"=>$posts,
         ]);
     }
     public function update(Request $request){
@@ -79,8 +82,10 @@ class ProfileController extends Controller
     }
     public function view($id){
         $user = User::find($id);
+        $posts = GroupPost::where(["user_id"=>$user->id,"approved"=>1])->latest()->paginate(10);
         return view("users.view-profile")->with([
-            "user"=>$user
+            "user"=>$user,
+            "posts"=>$posts,
         ]);
     }
 }
