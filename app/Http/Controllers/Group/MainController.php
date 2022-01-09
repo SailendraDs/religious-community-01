@@ -148,6 +148,7 @@ class MainController extends Controller
                 $groupm = new GroupMember;
                 $groupm->group_id = $group->id;
                 $groupm->user_id = Auth::user()->id;
+                
                 if($group->join_approval===1){
                     $groupm->approved = 0;
                     $request->session()->flash('success', "Group joining request sent");

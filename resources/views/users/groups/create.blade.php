@@ -20,7 +20,7 @@
                 <textarea name="description" id="description"></textarea>
             </div>
             <div class="form-group">
-                <label class="form-label" for="category">Category:</label>
+                <label class="form-label" for="location">Location:</label>
                 <select name="location" id="location" class="custom-select">
                     <option value="">Select a location</option>
                     @foreach ($locations as $location)

@@ -34,6 +34,13 @@ class Group extends Model
     {
         return $this->hasMany('App\Models\Campaign', 'cid');
     }
- 
+    public function owner(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
+    public function posts(): HasMany
+    {
+        return $this->hasMany(GroupPost::class, 'group_id');
+    }
    
 }

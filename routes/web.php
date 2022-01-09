@@ -8,8 +8,11 @@ use App\Http\Controllers\Group\SettingsController as GroupSettings;
 use App\Http\Controllers\Group\PostController as GroupPost;
 use App\Http\Controllers\User\GroupController as UserGroup;
 
-use App\Http\Controllers\User\CampaignController as UserCampaign;
-use App\Http\Controllers\Campaign\MainController as CampaignMain;
+use App\Http\Controllers\Group\Campaign\CampaignController as UserCampaign;
+use App\Http\Controllers\Group\Campaign\MainController as CampaignMain;
+
+use App\Http\Controllers\Admin\GroupAdminController as GroupAdmin;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -69,12 +72,25 @@ Route::name("groups.")->prefix("groups")->group(function(){
         Route::post("{id}/post/like",[GroupPost::class,"like"])->name("post.like");
         Route::post("{id}/post/delete",[GroupPost::class,"delete"])->name("post.delete");
         Route::post("{id}/post/comment",[GroupPost::class,"comment"])->name("post.comment");
+        Route::name("campaigns.")->prefix("campaigns")->group(function(){
+            Route::get("/",[CampaignMain::class,"home"])->name("home");
+            Route::get("view/{id}/{title}",[CampaignMain::class,"view"])->name("view");
+            Route::get("campaigns",[UserCampaign::class,"index"])->name("campaigns");
+            Route::get("campaigns/create",[UserCampaign::class,"create"])->name("campaigns.create");
+            Route::post("campaigns/create",[UserCampaign::class,"store"])->name("campaigns.create");
+            Route::post("campaigns/delete",[UserCampaign::class,"delete"])->name("campaigns.delete");
+     
+        
+        });
         
     });
 });
 
-Route::name("campaigns.")->prefix("campaigns")->group(function(){
-    Route::get("/",[CampaignMain::class,"index"])->name("index");
-    Route::get("view/{id}/{title}",[CampaignMain::class,"view"])->name("view");
 
+Route::name("admin.")->prefix("admin")->group(function(){
+    Route::get("groupadmins",[GroupAdmin::class,"index"])->name("groupadmins");
+    Route::get("groupadmins/create",[GroupAdmin::class,"create"])->name("groupadmins.create");
+    Route::post("groupadmins/create",[GroupAdmin::class,"store"])->name("groupadmins.create");
+    Route::post("groupadmins/delete",[GroupAdmin::class,"delete"])->name("groupadmins.delete");
+   
 });

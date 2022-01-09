@@ -1,91 +1,112 @@
-@extends('layouts.app')
-
+@extends('layouts.first')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+<div>&nbsp;</div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="mobile" class="col-md-4 col-form-label text-md-end">{{ __('Mobile Number') }}</label>
-
-                            <div class="col-md-6">
-                                <input type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" id="mobile" required placeholder="Mobile Number" data-mask="mobile" autocomplete="off" />
-                                @error('mobile')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-
-                            </div>
-                        </div>
-
-                        
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<div class="appHeader">
+        <div class="left">
+            <a href="javascript:;" class="icon goBack">
+                <i class="icon ion-ios-arrow-back"></i>
+            </a>
         </div>
+        
+        <div class="pageTitle">Register</div>
+        @guest
+        @if (Route::has('register'))<div class="right">
+     
+            <a href="{{ route('login') }}" class="link">Login</a>
+        </div>
+        @endif
+                        @endguest
     </div>
+  
+ <!-- searchBox -->
+    
+    <!-- * searchBox -->
+    <!-- * App Header -->
+
+    <!-- App Capsule -->
+    <div id="searchBox">
+        <form>
+            <span class="inputIcon">
+                <i class="icon ion-ios-search"></i>
+            </span>
+            <input type="text" class="form-control" id="searchInput" placeholder="Search...">
+            <a href="javascript:;" class="toggleSearchbox closeButton">
+                <i class="icon ion-ios-close-circle"></i>
+            </a>
+        </form>
+    </div>
+     <!-- searchBox -->
+    
+    <!-- * searchBox -->
+    <!-- * App Header -->
+
+    <!-- App Capsule -->
+
+<div id="appCapsule">
+
+<div class="appContent">
+
+
+<div class="sectionTitle text-center mt-3">
+    <div class="title">
+        <h1>Welcome to Jaago</h1>
+    </div>
+    <div class="lead mb-2">Register to continue</div>
 </div>
+
+
+<form method="POST" action="{{ route('register') }}">
+@csrf
+    <div class="form-group">
+        <input id="name" name="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Your Full Name" required autofocus>
+        @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+    </div>
+   
+    <div class="form-group">
+        <input id="email" name="email" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="E-mail Address" required autofocus>
+        @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+    </div>
+    <div class="form-group">
+        <input id="mobile" name="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" placeholder="Mobile Number" required autofocus>
+        @error('mobile')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+    </div>
+    <div class="form-group">
+        <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Enter 6 Digit PIN" required autocomplete="new-password">
+        
+        @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+    </div>
+    <div class="form-group">
+        <input type="password" id="password-confirm" name="password_confirmation" class="form-control" placeholder="Confirm your 6 Digit PIN" autocomplete="new-password">
+        
+    
+    </div>
+   
+    <div>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">
+           Register
+        </button>
+    </div>
+</form>
+
+
+</div>
+</div>
+
 @endsection
