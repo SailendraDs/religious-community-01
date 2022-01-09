@@ -7,6 +7,7 @@ use App\Http\Controllers\Group\MainController as GroupMain;
 use App\Http\Controllers\Group\SettingsController as GroupSettings;
 use App\Http\Controllers\Group\PostController as GroupPost;
 use App\Http\Controllers\User\GroupController as UserGroup;
+use App\Http\Controllers\User\TransactionController as UserPayment;
 
 use App\Http\Controllers\Group\Campaign\CampaignController as UserCampaign;
 use App\Http\Controllers\Group\Campaign\MainController as CampaignMain;
@@ -45,6 +46,9 @@ Route::middleware(["auth","verified"])->group(function(){
         Route::get("campaigns/create",[UserCampaign::class,"create"])->name("campaigns.create");
         Route::post("campaigns/create",[UserCampaign::class,"store"])->name("campaigns.create");
         Route::post("campaigns/delete",[UserCampaign::class,"delete"])->name("campaigns.delete");
+
+        Route::get("campaign/{id}/pay/razorpay/{amount}",[UserPayment::class,"razorpay"])->name("payment.razorpay");
+        Route::post("campaign/{id}/pay/razorpay",[UserPayment::class,"razorpayPay"])->name("payment.razorpay");
    });
 
 });
