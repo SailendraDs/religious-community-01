@@ -19,6 +19,7 @@ class TransactionController extends Controller
     }
     public function razorpay($id,Request $request){
         return view("users.payments.razorpay")->with([
+            "id"=>$id,
             "amount"=>$request->amount,
         ]);
     }
