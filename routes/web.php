@@ -44,7 +44,7 @@ Route::middleware(["auth","verified"])->group(function(){
         Route::post("campaigns/create",[UserCampaign::class,"store"])->name("campaigns.create");
         Route::post("campaigns/delete",[UserCampaign::class,"delete"])->name("campaigns.delete");
 
-        Route::get("campaign/{id}/pay/razorpay",[UserPayment::class,"razorpay"])->name("payment.razorpay");
+        Route::get("campaign/{id}/pay/razorpay/{amount}",[UserPayment::class,"razorpay"])->name("payment.razorpay");
         Route::post("campaign/{id}/pay/razorpay",[UserPayment::class,"razorpayPay"])->name("payment.razorpay");
    });
 
